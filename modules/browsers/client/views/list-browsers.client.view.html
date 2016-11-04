@@ -1,0 +1,43 @@
+<section  >
+	<input type="button" class="btn btn-success pull-right"  data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1" value="Add New Browser" data-title="Add" ng-click="openAddBrowserModal()" />
+
+	<div class="page-header">
+		<h1>Browsers</h1>
+	</div>
+
+	<div class="col-md-12">
+		<div class="table-responsive" data-ng-if="vm.browsers.length > 0">
+			<table id="mytable" class="table table-bordred table-striped">
+				<thead>
+					<!--<th><input type="checkbox" id="checkall" /></th>-->
+					<th>Name</th>
+					<th>Version</th>
+					<th>Display name</th>
+					<th>Base version</th>
+					<th data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">Edit</th>
+					<th data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">Delete</th>
+				</thead>
+				<tbody>
+
+					<tr ng-repeat="browser in vm.browsers">
+						<!--<td class="width-60px"><input type="checkbox" class="checkthis" /></td>-->
+						<td>{{browser.name}}</td>
+						<td>{{browser.version}}</td>
+						<td><b>{{browser.name + " "}}<b<b> {{ browser.version}}</b></td>
+						<td><span class="glyphicon glyphicon-ok color-green" aria-hidden="true" ng-show="browser.isBaseVersion"></span></td>
+						<td class="width-60px" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
+							<p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ng-click="openAddBrowserModal(browser)"><span class="glyphicon glyphicon-pencil"></span></button></p>
+						</td>
+						<td class="width-60px" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
+							<p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" ng-click="openDeleteBrowserModal(browser)"><span class="glyphicon glyphicon-trash"></span></button></p>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+		 
+		<div class="alert alert-warning text-center" data-ng-if="vm.browsers.$resolved && !vm.browsers.length">
+			No browsers created.
+		</div>
+</section>

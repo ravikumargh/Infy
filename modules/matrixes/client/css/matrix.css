@@ -1,0 +1,113 @@
+.bigcheck-target{
+    color: #037f03;   
+}
+.bigcheck label, .bigcheck input{
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.matrixForm .alert-warning{
+    margin-top: 10px;
+}
+ 
+.matrix-table {
+    width: auto;
+}
+.matrix-table .close {
+        font-size: 16px;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+}
+.matrix-table .option-dropdown-menu {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0 solid #ccc;
+    box-shadow: none;
+    font-size: 14px;
+    margin-right: 25px;
+    width: 130px;
+}
+
+.matrix-table .option-dropdown-menu:hover {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;*/
+}
+
+.matrix-table > thead > tr > th,
+.matrix-table > tbody > tr > th,
+.matrix-table > tfoot > tr > th,
+.matrix-table > thead > tr > td,
+.matrix-table > tbody > tr > td,
+.matrix-table > tfoot > tr > td {
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    width: 160px;
+}
+
+.header .navbar-default {
+    background-color: #000;
+    border-color: #000;
+}
+
+.OS-Browser-table .form-control {
+    font-weight: bold;
+    padding: 0;
+}
+
+.header .padding-left-50px {
+    padding-left: 50px;
+}
+
+.header .navbar-default .navbar-nav .active a {
+    background-color: #797878;
+    font-weight: bold;
+}
+
+.header .navbar-default .navbar-nav .active a:hover,
+.header .navbar-default .navbar-nav .active a:focus {
+    background-color: #5d5c5c;
+    font-weight: bold;
+}
+
+.header .navbar-default .navbar-nav > li > a,
+.header .navbar-default .navbar-nav > li > a:hover {
+    color: #fff !important;
+}
+
+.width-60px {
+    width: 60px
+}
+.margin-5px{
+    margin: 5px;
+}
+.margin-left-5px{
+    margin-left: 5px;
+}
+.padding-left-right-15px{
+    padding: 15px 0;
+}
+
+.header-action{
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.success-color {
+    color: #3c763d;
+}
+
+
+form.ng-submitted input.ng-invalid, form.ng-submitted select.ng-invalid {
+    color: #fa1d1d;
+}

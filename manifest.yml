@@ -1,0 +1,13 @@
+---
+declared-services:
+  infy-mongo:
+    label: mongodb
+    plan: 100
+applications:
+- name: infy
+  host: infy-${random-word}
+  memory: 128M
+  services:
+  - infy-mongo
+  env:
+    NODE_ENV: cloud-foundry

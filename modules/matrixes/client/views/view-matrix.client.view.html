@@ -1,0 +1,104 @@
+<section data-ng-controller="MatrixesController" data-ng-init="find()">
+	<form name="matrixForm" class="matrixForm" ng-submit="create(matrixForm)" novalidate>
+		<div class="page-header">
+			<h1>OS and Browser Matrix</h1>
+			<h5>Update compatibility matrix based on the latest OS/Browser release and user base shift.</h5>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h3 class="control-label margin-5px pull-left " for="selectCategories">categories </h3>
+			
+				<select id="selectCategories" class="option-dropdown-menu form-control pull-left " style="width:150px" ng-model="selectedCategory" ng-change="onChangeCategory(matrixForm)"
+					ng-options="category as category.name for category in categories track by category._id" ng-model="selected">
+				<option value="">Select category</option>
+				</select>
+ 
+			</div>
+		</div>
+		<div ng-if="selectedCategory.matrix == null">
+			<div class="col-md-12 alert alert-warning text-center" ng-show="selectedCategory != null">No matrix created for this category.</div>
+		</div>
+		<div class="col-md-12 alert alert-warning text-center" ng-if="selectedCategory == null">
+			<div ng-show="selectedCategory == null">Please select any category to view the matrix.</div>
+		</div>
+		<div class="col-md-12" ng-if="selectedCategory.matrix != null">
+			<div class="form-group has-success">
+				<hr />
+				<h3 class="col-sm-2" style="margin: 0;padding-right: 0;">Desktop Matrix</h3>
+			</div>
+			<br />
+			<br />
+			<div class="alert alert-warning text-center" ng-show="desktopMatrix.length == 0"  ng-if="selectedCategory.matrix != null">
+				<div ng-show="selectedCategory == null">Please select any category to view the matrix.</div>
+				<div ng-show="selectedCategory != null">No desktop matrix created for this category.</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="table-responsive" >
+				<table class="table matrix-table table-hover OS-Browser-table" ng-hide="desktopMatrix.length==0">
+					<thead style="background-color: #F2F2F2;">
+						<tr>
+							<th style="width: 170px; padding-right: 20px; ">OS/Browser</th>
+							<th ng-repeat="mb in desktopMatrix[0].browsers" style="position: relative; width: 170px; padding-right: 20px;">
+								{{mb.browser.name}}&nbsp;{{mb.browser.version}}&nbsp;<span ng-show="mb.browser.isBaseVersion">+</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="m in desktopMatrix">
+							<td scope="row" class="" style="background-color: #F2F2F2;width:170px ; position: relative;">
+								<b>{{m.os.name}}&nbsp;{{m.os.version}}</b>
+							</td>
+							<td ng-repeat="browser in m.browsers">
+								<span class="bigcheck" ng-show="browser._id != '' && m._id != '' ">
+							<span class="bigcheck-target" ng-show="browser.isSupported">Supported</span>
+								<span class="bigcheck-target-Unsupported" ng-show="!browser.isSupported">Unsupported</span>
+								</span>
+							</td>
+						</tr>
+				</table>
+			</div>			
+		</div>
+		<div class="col-md-12" ng-if="selectedCategory.matrix != null">
+			<div class="form-group has-success">
+				<hr />
+				<h3 class="col-sm-2" style="margin: 0;">Mobile Matrix</h3>
+			</div>
+			<br />
+			<br />
+			<div class="alert alert-warning text-center" ng-show="mobileMatrix.length == 0" ng-if="selectedCategory.matrix != null">
+				<div ng-show="selectedCategory == null">Please select any category to view the matrix.</div>
+				<div ng-show="selectedCategory != null">No mobile matrix created for this category.</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="table-responsive" >
+				<table class="table matrix-table table-hover OS-Browser-table" ng-hide="mobileMatrix.length==0">
+					<thead style="background-color: #F2F2F2;">
+						<tr>
+							<th style="width: 170px; padding-right: 20px;">OS/Browser</th>
+							<th ng-repeat="mb in mobileMatrix[0].browsers" style="position: relative; width: 170px; padding-right: 20px;">
+								{{mb.browser.name}}&nbsp;{{mb.browser.version}}&nbsp;<span ng-show="mb.browser.isBaseVersion">+</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="m in mobileMatrix">
+							<td scope="row" class="" style="background-color: #F2F2F2;width:170px ; position: relative;">
+								<b>{{m.os.name}}&nbsp;{{m.os.version}}</b>
+							</td>
+							<td ng-repeat="browser in m.browsers">
+								<span class="bigcheck" ng-show="browser._id != '' && m._id != '' ">
+							
+							<span class="bigcheck-target" ng-show="browser.isSupported">Supported</span>
+								<span class="bigcheck-target-Unsupported" ng-show="!browser.isSupported">Unsupported</span>
+
+								</span>
+							</td>
+						</tr>
+				</table>	
+			</div>		
+		</div>
+	</form>
+</section>

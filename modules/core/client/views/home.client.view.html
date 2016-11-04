@@ -1,0 +1,4 @@
+<section data-ng-controller="HomeController">
+	<div  data-ng-if="authentication.user.role=='admin'" data-ng-include="'/modules/matrixes/client/views/create-matrix.client.view.html'"></div>
+	<div data-ng-if="authentication.user.role !='admin'" data-ng-include="'/modules/matrixes/client/views/view-matrix.client.view.html'"></div>
+</section>

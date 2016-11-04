@@ -1,0 +1,162 @@
+<section data-ng-controller="MatrixesController as vm">
+<form name="matrixForm" ng-submit="vm.create(matrixForm)" novalidate>
+	<div class="row">
+	<div class="col-md-12 padding-left-right-15px">
+	<div class="col-md-5">
+		<h2>OS and Browser Matrix</h2>		
+	</div>
+	<div class="col-md-7">
+		<div class="pull-right header-action">
+			<h3 class="control-label margin-5px pull-left " for="selectCategories">categories </h3>
+			<select id="selectCategories" class="option-dropdown-menu form-control pull-left " style="width:150px" ng-model="vm.selectedCategory"
+				ng-change="onChangeCategory(matrixForm)" ng-options="category as category.name for category in vm.categories track by category._id"
+				ng-model="selected">
+		<option value="">Select category</option>
+		</select>
+			<div class="pull-left margin-left-5px">
+				<button ng-disabled="vm.selectedCategory == null" class="btn btn-success" data-title="Save Matrix">
+				<span class=" glyphicon glyphicon-floppy-save"></span> Save matrix
+			</button>
+				<button class="btn btn-primary" type="button" ng-disabled="vm.selectedCategory == null" ng-click="vm.openPublishMatrixModal()" data-title="Publish Matrix">
+				<span class=" glyphicon glyphicon-cloud-upload"></span> Publish matrix
+			</button>
+				<button class="btn btn-primary" type="button" ng-disabled="vm.selectedCategory == null || vm.selectedCategory.publishedMatrix == null" ng-click="vm.openViewJsonModal()" data-title="View JSON">
+				<span class="glyphicon glyphicon-zoom-in"></span> View JSON
+			</button>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<h5>Update compatibility matrix based on the latest OS/Browser release and user base shift.</h5>
+	</div>
+</div>
+	
+</div>
+ <div class="row">
+	<div class="col-md-12 alert alert-warning text-center" ng-if="vm.selectedCategory == null">
+		<div ng-show="vm.selectedCategory == null">Please select any category to create/view the matrix.</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12"  ng-if="vm.selectedCategory != null">
+		 
+			
+			<h3 class="col-sm-12 col-md-2" style="margin: 0;padding-right: 0;">Desktop Matrix</h3>
+			<div class="col-sm-12 col-md-3">
+				<button type="button" ng-click="vm.addNewOS()" data-ng-if="vm.selectedCategory != null" class="btn btn-info" data-title="Add OS">
+  					<span class="glyphicon glyphicon-plus"></span> OS
+				</button>
+				<button type="button" ng-click="vm.addNewBrowser()" data-ng-if="vm.desktopMatrix.length !=0 " class="btn btn-warning" data-title="Add Browser">
+  					<span class="glyphicon glyphicon-plus"></span> Browser
+				</button>
+			</div>
+		 
+		<hr class="col-md-12 margin-5px"  />
+		<div class="col-sm-12" ng-if="vm.desktopMatrix.length == 0"  >
+			<div class="alert alert-warning text-center" ng-show="vm.selectedCategory != null">No desktop matrix created for this category.</div>
+		</div>
+	</div>
+
+	<div class="col-md-12"   >
+		<div class="table-responsive" >
+			<table class="table matrix-table table-hover OS-Browser-table" ng-hide="vm.desktopMatrix.length==0">
+				<thead style="background-color: #F2F2F2;">
+					<tr>
+						<th>OS/Browser</th>
+						<th ng-repeat="mb in vm.desktopMatrix[0].browsers" style="position: relative;    "> 
+							<select required ng-model="mb.browser" ng-change="vm.updateBrowser(this, $index)" ng-options="browser._id as browser.displayName for browser in vm.browsers"
+								  class="option-dropdown-menu form-control pull-left">
+								<option value="">Select Browser</option>
+							</select>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+								ng-click="vm.removeBrowser(mb, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="m in vm.desktopMatrix">
+						<td scope="row" class="" style="background-color: #F2F2F2; position: relative;">
+							<select required class="option-dropdown-menu form-control" ng-model="m.os">
+								<option value="">Select OS</option>
+								<option ng-repeat="os in vm.oss | filter:{ type:'desktop'} " value="{{os._id}}">{{os.displayName}}</option>
+							</select>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+								ng-click="vm.removeOS(m)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+						</td>
+						<td ng-repeat="browser in m.browsers">
+							<span class="bigcheck" ng-show="browser._id != '' && m._id != '' ">
+							<label class="bigcheck">
+							<input type="checkbox" class="bigcheck" name="isSupported" ng-model="browser.isSupported" />
+							<span class="bigcheck-target" ng-show="browser.isSupported">Supported</span>
+							<span class="bigcheck-target-Unsupported" ng-show="!browser.isSupported">Unsupported</span>
+							</label>
+							</span>
+						</td>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12"   ng-if="vm.selectedCategory != null">
+		<div class="form-group has-success">
+			<h3 class="col-sm-12 col-md-2" style="margin: 0;">Mobile Matrix</h3>
+			<div class="col-sm-12 col-md-3">
+			<button type="button" ng-click="vm.addNewOSMobileMatrix()" data-ng-if="vm.selectedCategory != null" class="btn btn-info" data-title="Add OS">
+					<span class="glyphicon glyphicon-plus"></span> OS
+				</button>
+			<button type="button" ng-click="vm.addNewBrowserMobileMatrix()" data-ng-if="vm.mobileMatrix.length !=0 " class="btn btn-warning"
+			data-title="Add Browser">
+					<span class="glyphicon glyphicon-plus"></span> Browser
+				</button>
+			</div>
+			 
+		</div>
+	 
+	<hr class="col-md-12 margin-5px"  />
+		<div class="col-sm-12 alert alert-warning text-center" ng-show="vm.mobileMatrix.length == 0" >
+			<div ng-show="vm.selectedCategory != null">No mobile matrix created for this category.</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="table-responsive" >
+			<table class="table matrix-table table-hover OS-Browser-table" ng-hide="vm.mobileMatrix.length==0">
+				<thead style="background-color: #F2F2F2;">
+					<tr>
+						<th>OS/Browser</th>
+						<th ng-repeat="mb in vm.mobileMatrix[0].browsers" style="position: relative;    ">
+							<select required ng-model="mb.browser" ng-change="vm.updateBrowserMobileMatrix(this, $index)" ng-options="browser._id as browser.displayName for browser in vm.browsers"
+								class="option-dropdown-menu form-control pull-left">
+								<option value="">Select Browser</option>
+							</select>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+								ng-click="vm.removeBrowserMobileMatrix(mb, $index)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="m in vm.mobileMatrix">
+						<td scope="row" class="" style="background-color: #F2F2F2; position: relative;">
+							<select required class="option-dropdown-menu form-control" ng-model="m.os">
+								<option value="">Select OS</option>
+								<option ng-repeat="os in vm.oss | filter:{ type:'mobile'} " value="{{os._id}}">{{os.displayName}}</option>
+							</select>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+								ng-click="vm.removeOSMobileMatrix(m)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+						</td>
+						<td ng-repeat="browser in m.browsers">
+							<span class="bigcheck" ng-show="browser._id != '' && m._id != '' ">
+								<label class="bigcheck">
+								<input type="checkbox" class="bigcheck" name="isSupported" ng-model="browser.isSupported" />
+								<span class="bigcheck-target" ng-show="browser.isSupported">Supported</span>
+								<span class="bigcheck-target-Unsupported" ng-show="!browser.isSupported">Unsupported</span>
+								</label>
+							</span>
+						</td>
+					</tr>
+			</table>
+		</div>
+	</div>
+	</form>
+</section>

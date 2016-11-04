@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+    <h3 class="modal-title custom_align" id="Heading">Published OS and Browser Matrix</h3>
+</div>
+<div class="modal-body">
+
+    <div class="alert-warning text-center" ng-if="categoryMatrix._id == null">
+        <div>No matrix published for this category.</div>
+    </div>
+    <div ng-if="categoryMatrix._id != null">
+        <div class="form-group has-success">
+            <h3 class="col-sm-12" style="margin: 0;padding-right: 0;">Desktop Matrix</h3>
+        </div>
+        <br /><br />
+        <div class="alert-warning text-center" ng-if="categoryMatrix.desktopMatrix.length == 0">
+            <div>No desktop matrix created for this category.</div>
+        </div>
+    </div>
+    <div ng-if="categoryMatrix._id != null && categoryMatrix.desktopMatrix.length != 0">
+        <div class="table-responsive" >
+            <table class="table matrix-table table-hover OS-Browser-table">
+                <thead style="background-color: #F2F2F2;">
+                    <tr>
+                        <th style="width: 170px; padding-right: 20px; ">OS/Browser</th>
+                        <th ng-repeat="mb in categoryMatrix.desktopMatrix[0].browsers"  class="text-center" style="position: relative; width: 170px; padding-right: 20px;">
+                            {{mb.name}}&nbsp;{{mb.version}}&nbsp;<span ng-show="mb.isBaseVersion">+</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="m in categoryMatrix.desktopMatrix">
+                        <td scope="row" class="" style="background-color: #F2F2F2;width:170px ; position: relative;">
+                            <b>{{m.name}}&nbsp;{{m.version}}</b>
+                        </td>
+                        <td ng-repeat="browser in m.browsers" class="text-center">
+                            <span class="bigcheck" ng-show="browser._id != '' && m._id != '' ">
+                            <span class="glyphicon glyphicon-ok color-green" aria-hidden="true" ng-show="browser.isSupported"></span>
+                            <span class="glyphicon glyphicon-remove color-gray" aria-hidden="true" ng-show="!browser.isSupported"></span>
+                            </span>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+
+    <div ng-if="categoryMatrix._id != null">
+        <div class="form-group has-success">
+            <h3 class="col-sm-12" style="margin: 0;">Mobile Matrix</h3>
+        </div>
+        <br /><br />
+        <div class="alert-warning text-center" ng-if="categoryMatrix.mobileMatrix.length == 0">
+            <div>No mobile matrix created for this category.</div>
+        </div>
+    </div>
+    <div ng-if="categoryMatrix._id != null && categoryMatrix.mobileMatrix.length != 0">
+        <div class="table-responsive" >
+            <table class="table matrix-table table-hover OS-Browser-table">
+                <thead style="background-color: #F2F2F2;">
+                    <tr>
+                        <th style="width: 170px; padding-right: 20px;">OS/Browser</th>
+                        <th ng-repeat="mb in categoryMatrix.mobileMatrix[0].browsers"  class="text-center" style="position: relative; width: 170px; padding-right: 20px;">
+                            {{mb.name}}&nbsp;{{mb.version}}&nbsp;<span ng-show="mb.isBaseVersion">+</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="m in categoryMatrix.mobileMatrix">
+                        <td scope="row" class="" style="background-color: #F2F2F2;width:170px ; position: relative;">
+                            <b>{{m.name}}&nbsp;{{m.version}}</b>
+                        </td>
+                        <td ng-repeat="browser in m.browsers" class="text-center">
+                            <span class="bigcheck" ng-show="browser._id != '' && m._id != '' ">
+                            <span class="glyphicon glyphicon-ok color-green" aria-hidden="true" ng-show="browser.isSupported"></span>
+                            <span class="glyphicon glyphicon-remove color-gray" aria-hidden="true" ng-show="!browser.isSupported"></span>
+                            </span>
+                        </td>
+                    </tr>
+            </table>
+         </div>
+    </div>
+</div>
+<div class="modal-footer">
+</div>

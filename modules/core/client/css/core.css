@@ -1,0 +1,113 @@
+.content {
+  margin-top: 100px;
+}
+.undecorated-link:hover {
+  text-decoration: none;
+}
+[ng\:cloak],
+[ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
+}
+.header-profile-image {
+  border-radius: 50%;
+  height: 28px;
+  margin-right: 5px;
+  opacity: 0.8;
+  width: 28px;
+}
+.open .header-profile-image,
+a:hover .header-profile-image {
+  opacity: 1;
+}
+.user-header-dropdown-toggle {
+  padding-bottom: 11px !important;
+  padding-top: 11px !important;
+}
+.user-primary-account {
+  font-size: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.error-text {
+  display: none;
+}
+.has-error .help-block.error-text {
+  display: block;
+}
+.has-error .help-inline.error-text {
+  display: inline;
+}
+
+
+
+
+
+.width-60px {
+  width: 60px
+}
+.table-bordred {
+    border: 1px solid #dddddd;
+	  border-collapse: collapse;
+}
+.color-green{
+	color: #3e8f3e;
+}
+.color-gray{
+	color: #bab7b7;
+}
+
+/*header*/
+.brand-bar {
+    background-color: #fff;
+}
+
+.pearson-logo {
+    background: url(../img/brand/pearson-logo.png) left top no-repeat;
+    background-size: 133px 40px;
+    display: inline-block;
+    height: 40px;
+    margin-right: 1.5rem;
+    width: 133px;
+}
+.brand-bar .navbar-brand{
+	padding: 5px;
+}
+.brand-bar .header-text{
+	  font-size: 18px;
+    line-height: 50px;
+	  margin-right: 15px;
+    padding: 15px;
+}
+
+
+.navbar-right, a.navbar-right, a.navbar-right:hover
+{
+    text-decoration: none;
+}
+.navbar-toggle{
+	    background-color: #333;
+}
+@media (max-width: 480px) { 
+	.content {
+		margin-top: 30px;
+	}
+	.header-text {
+		margin: 0;
+		padding: 0; 
+	}
+ }
+ @media (max-width: 320px) { 
+	.header-text {
+		font-size: 11px;
+		line-height: 50px;
+		margin: 0;
+		padding: 0; 
+	}
+	.navbar-inverse .navbar-toggle {
+		margin: 8px;
+	}
+ }
