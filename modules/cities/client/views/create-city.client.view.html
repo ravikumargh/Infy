@@ -1,0 +1,37 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+	<h3 class="modal-title custom_align" id="Heading">{{headerText}}</h3>
+</div>
+<form name="cityForm" ng-submit="create()" novalidate>
+	<div class="modal-body">
+		<fieldset>
+			<div class="form-group">
+				<label class="control-label" for="name">Name</label>
+				<div class="controls">
+					<!--<input name="name" min="0" data-ng-model="city.name" id="name" class="form-control" placeholder="City name">-->
+					<input vs-google-autocomplete="options" ng-model="address" vs-city="city.name" vs-state="city.state" vs-place-id="city.placeId"
+						vs-country="city.country" vs-country-short="city.countrycode" vs-post-code="city.postcode" vs-district="city.district"
+						vs-latitude="city.location.latitude" vs-longitude="city.location.longitude " name="address" class="form-control"
+						type="text" placeholder="Search city name">
+					<!-- model -->
+					<span class="help-block"><b>Place id: </b>{{city.placeId}}</span>
+					<span class="help-block"><b>City: </b>{{city.name}}</span>
+					<span class="help-block"><b>District: </b>{{city.district}}</span>
+					<span class="help-block"><b>State: </b>{{city.state}}</span>
+					<span class="help-block"><b>Country: </b>{{city.country}}</span>
+					<span class="help-block"><b>Country code: </b>{{city.countrycode}}</span>
+					<span class="help-block"><b>Postcode: </b>{{city.postcode}}</span>
+					<span class="help-block"><b>Latitude: </b>{{city.location.latitude}}</span>
+					<span class="help-block"><b>Longitude: </b>{{city.location.longitude}}</span>
+				</div>
+			</div>
+			<div data-ng-show="error" class="text-danger">
+				<strong data-ng-bind="error"></strong>
+			</div>
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" ng-disabled="cityForm.$invalid">Save</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</form>

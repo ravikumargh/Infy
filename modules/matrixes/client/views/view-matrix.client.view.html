@@ -7,9 +7,9 @@
 
 		<div class="col-md-12">
 			<div class="form-group">
-				<h3 class="control-label margin-5px pull-left " for="selectCategories">categories </h3>
+				<h3 class="control-label margin-5px pull-left " for="selectCities">categories </h3>
 			
-				<select id="selectCategories" class="option-dropdown-menu form-control pull-left " style="width:150px" ng-model="selectedCategory" ng-change="onChangeCategory(matrixForm)"
+				<select id="selectCities" class="option-dropdown-menu form-control pull-left " style="width:150px" ng-model="selectedCategory" ng-change="onChangeCategory(matrixForm)"
 					ng-options="category as category.name for category in categories track by category._id" ng-model="selected">
 				<option value="">Select category</option>
 				</select>

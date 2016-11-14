@@ -5,9 +5,9 @@
     .module('matrixes')
     .controller('MatrixesController', MatrixesController);
 
-  MatrixesController.$inject = ['$scope', '$state', '$stateParams', '$log', '$uibModal', 'Authentication', 'CategoriesService', 'Notification', 'OperatingSystemsService', 'BrowsersService', 'MatrixResource' ,'PublishedMatrixResource'];
+  MatrixesController.$inject = ['$scope', '$state', '$stateParams', '$log', '$uibModal', 'Authentication', 'CitiesService', 'Notification', 'OperatingSystemsService', 'BrowsersService', 'MatrixResource' ,'PublishedMatrixResource'];
 
-  function MatrixesController($scope, $state, $stateParams, $log, $uibModal, Authentication, CategoriesService, Notification, OperatingSystemsService, BrowsersService, MatrixResource, PublishedMatrixResource) {
+  function MatrixesController($scope, $state, $stateParams, $log, $uibModal, Authentication, CitiesService, Notification, OperatingSystemsService, BrowsersService, MatrixResource, PublishedMatrixResource) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -24,7 +24,7 @@
       if (!Authentication.user) {
         $state.go('home');
       }
-      vm.categories = CategoriesService.query();
+      vm.categories = CitiesService.query();
       vm.oss = OperatingSystemsService.query();
       vm.browsers = BrowsersService.query();
 
