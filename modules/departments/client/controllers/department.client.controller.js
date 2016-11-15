@@ -5,12 +5,12 @@
 		.module('departments')
 		.controller('DepartmentsController', DepartmentsController);
 
-	DepartmentsController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'departmentResolve', 'DepartmentsService', 'Notification'];
+	DepartmentsController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication',  'DepartmentsService', 'Notification'];
 
-	function DepartmentsController($scope, $state, $log, $uibModal, Authentication, department, DepartmentsService, Notification) {
+	function DepartmentsController($scope, $state, $log, $uibModal, Authentication,  DepartmentsService, Notification) {
 		var vm = this;
 
-		vm.department = department;
+		//vm.department = department;
 		vm.authentication = Authentication;
 		vm.remove = remove;
 		vm.save = save;
@@ -74,7 +74,7 @@
 			vm.selectedDepartment = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'modules/departments/client/views/create-department.client.view.html',
+				templateUrl: '/modules/departments/client/views/create-department.client.view.html',
 				controller: 'DepartmentsCreateModalController',
 				resolve: {
 					ParentScope: function () {
@@ -92,7 +92,7 @@
 			vm.selectedDepartment = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'modules/departments/client/views/delete-department.client.view.html',
+				templateUrl: '/modules/departments/client/views/delete-department.client.view.html',
 				controller: 'DepartmentsDeleteModalController',
 				resolve: {
 					ParentScope: function () {

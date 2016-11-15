@@ -5,12 +5,12 @@
 		.module('categories')
 		.controller('CategoriesController', CategoriesController);
 
-	CategoriesController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'categoryResolve', 'CategoriesService', 'Notification'];
+	CategoriesController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'CategoriesService', 'Notification'];
 
-	function CategoriesController($scope, $state, $log, $uibModal, Authentication, category, CategoriesService, Notification) {
+	function CategoriesController($scope, $state, $log, $uibModal, Authentication, CategoriesService, Notification) {
 		var vm = this;
 
-		vm.category = category;
+		// vm.category = category;
 		vm.authentication = Authentication;
 		vm.remove = remove;
 		vm.save = save;
@@ -75,7 +75,7 @@
 			vm.selectedCategory = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'modules/categories/client/views/create-category.client.view.html',
+				templateUrl: '/modules/categories/client/views/create-category.client.view.html',
 				controller: 'CategoriesCreateModalController',
 				resolve: {
 					ParentScope: function () {
@@ -93,7 +93,7 @@
 			vm.selectedCategory = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'modules/categories/client/views/delete-category.client.view.html',
+				templateUrl: '/modules/categories/client/views/delete-category.client.view.html',
 				controller: 'CategoriesDeleteModalController',
 				resolve: {
 					ParentScope: function () {

@@ -1,0 +1,42 @@
+<section>
+	<input type="button" class="btn btn-success pull-right" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1"
+		value="Add New Role" data-title="Add" ng-click="openAddRoleModal()" />
+
+	<div class="page-header">
+		<h1>Roles</h1>
+	</div>
+
+	<div class="col-md-12">
+		<div class="table-responsive" data-ng-if="vm.roles.length > 0">
+			<table id="mytable" class="table table-bordred table-striped">
+				<thead>
+					<!--<th><input type="checkbox" id="checkall" /></th>-->
+					<th>#</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">Edit</th>
+					<th data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">Delete</th>
+				</thead>
+				<tbody>
+
+					<tr ng-repeat="role in vm.roles | orderBy : 'sequence'">
+						<!--<td class="width-60px"><input type="checkbox" class="checkthis" /></td>-->
+						<td>{{role.sequence}}</td>
+						<td>{{role.name}}</td>
+						<td>{{role.description}}</td>
+						<td class="width-60px" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
+							<p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ng-click="openAddRoleModal(role)"><span class="glyphicon glyphicon-pencil"></span></button></p>
+						</td>
+						<td class="width-60px" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
+							<p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" ng-click="openDeleteRoleModal(role)"><span class="glyphicon glyphicon-trash"></span></button></p>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+		<div class="alert alert-warning text-center" data-ng-if="vm.roles.$resolved && !vm.roles.length">
+			No roles created.
+		</div>
+</section>

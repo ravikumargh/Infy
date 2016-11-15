@@ -1,17 +1,18 @@
+
 (function () {
   'use strict';
 
+  // Configuring the Categories Admin module
   angular
-    .module('categories')
+    .module('categories.admin')
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];
 
-  function menuConfig(menuService) {
-    // Set top bar menu items
-    menuService.addMenuItem('topbar', {
-      title: 'Categories',
-      state: 'categories'
+  function menuConfig(Menus) {
+    Menus.addSubMenuItem('topbar', 'admin', {
+      title: 'Manage Categories',
+      state: 'admin.categories.list'
     });
   }
 }());

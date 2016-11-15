@@ -2,24 +2,25 @@
   'use strict';
 
   angular
-    .module('departments.routes')
+    .module('departments.admin.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('departments', {
+    .state('admin.departments', {
+        abstract: true,
         url: '/departments',
+        template: '<ui-view/>'
+      })
+      .state('admin.departments.list', {
+        url: '',
         templateUrl: '/modules/departments/client/views/list-departments.client.view.html',
         controller: 'DepartmentsController',
         controllerAs: 'vm',
         data: {
-          roles: ['user', 'admin'],
-          pageTitle: 'Departments'
-        },
-        resolve: {
-          departmentResolve: newDepartment
+          roles: ['admin']
         }
       });
 

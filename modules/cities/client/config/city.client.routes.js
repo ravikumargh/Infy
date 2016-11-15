@@ -2,27 +2,27 @@
   'use strict';
 
   angular
-    .module('cities.routes')
+    .module('cities.admin.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('cities', {
+      .state('admin.cities', {
+        abstract: true,
         url: '/cities',
+        template: '<ui-view/>'
+      })
+      .state('admin.cities.list', {
+        url: '',
         templateUrl: '/modules/cities/client/views/list-cities.client.view.html',
         controller: 'CitiesController',
         controllerAs: 'vm',
         data: {
-          roles: ['user', 'admin'],
-          pageTitle: 'cities'
-        },
-        resolve: {
-          cityResolve: newCity
+          roles: ['admin']
         }
       });
-
   }
 
   getCity.$inject = ['$stateParams', 'CitiesService'];

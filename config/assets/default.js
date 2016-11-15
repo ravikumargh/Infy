@@ -29,6 +29,8 @@ module.exports = {
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
         'public/lib/angucomplete-alt/angucomplete-alt.js',       
         'public/lib/lodash/lodash.js',       
+        'public/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js',       
+        'public/lib/vsGoogleAutocomplete/dist/vs-autocomplete-validator.js',       
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']

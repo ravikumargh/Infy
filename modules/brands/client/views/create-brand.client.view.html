@@ -1,0 +1,29 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+	<h3 class="modal-title custom_align" id="Heading">{{headerText}}</h3>
+</div>
+<form name="brandForm" ng-submit="create()" novalidate>
+	<div class="modal-body">
+		<fieldset>
+			<div class="form-group">
+				<label class="control-label" for="name">Name</label>
+				<div class="controls">
+					<input name="name" min="0" data-ng-model="brand.name" id="name" class="form-control" placeholder="Brand name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="name">Description</label>
+				<div class="controls">
+					<input name="description" min="0" data-ng-model="brand.description" id="description" class="form-control" placeholder="Brand description">
+				</div>
+			</div>
+			<div data-ng-show="error" class="text-danger">
+				<strong data-ng-bind="error"></strong>
+			</div>
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" ng-disabled="brandForm.$invalid">Save</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</form>

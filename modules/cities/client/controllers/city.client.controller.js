@@ -5,12 +5,12 @@
 		.module('cities')
 		.controller('CitiesController', CitiesController);
 
-	CitiesController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'cityResolve', 'CitiesService', 'Notification'];
+	CitiesController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication',   'CitiesService', 'Notification'];
 
-	function CitiesController($scope, $state, $log, $uibModal, Authentication, city, CitiesService, Notification) {
+	function CitiesController($scope, $state, $log, $uibModal, Authentication,   CitiesService, Notification) {
 		var vm = this;
 
-		vm.city = city;
+		// vm.city = city;
 		vm.authentication = Authentication;
 		vm.remove = remove;
 		vm.save = save;
@@ -87,7 +87,7 @@
 			vm.selectedCity = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'modules/cities/client/views/create-city.client.view.html',
+				templateUrl: '/modules/cities/client/views/create-city.client.view.html',
 				controller: 'CitiesCreateModalController',
 				resolve: {
 					ParentScope: function () {
@@ -105,7 +105,7 @@
 			vm.selectedCity = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: 'modules/cities/client/views/delete-city.client.view.html',
+				templateUrl: '/modules/cities/client/views/delete-city.client.view.html',
 				controller: 'CitiesDeleteModalController',
 				resolve: {
 					ParentScope: function () {
