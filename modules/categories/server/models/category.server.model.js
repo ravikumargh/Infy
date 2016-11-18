@@ -14,20 +14,17 @@ var CategorySchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	namedid: {
+		type: String
+	},
 	name: {
 		type: String,
 		default: '',
 		trim: true,
-		required: 'Name cannot be blank'
+		required: 'Display name cannot be blank'
 	},
-	matrix: {
-		type: Schema.ObjectId,
-		ref: 'Matrix'
-	},	
-	publishedMatrix: {
-		type: Schema.ObjectId,
-		ref: 'PublishedMatrix'
-	},
+	parents: [],	
+	children: [],
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'

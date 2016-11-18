@@ -23,6 +23,12 @@
 				$state.go('home');
 			}
 			vm.categories = CategoriesService.query();
+			// vm.categories.$promise.then(function (categories) {
+			// 	categories.forEach(function (item) {
+			// 		item.id=item._id;					
+			// 	});
+			// });
+
 		}
 
 		// Remove existing Article
@@ -40,9 +46,7 @@
 		function save(item) {
 			var category = new CategoriesService({
 				_id: item._id,
-				name: item.name,
-				version: item.version,
-				isBaseVersion: item.isBaseVersion
+				name: item.name
 			});
 
 			// Create a new category, or update the current instance
@@ -107,11 +111,11 @@
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-		$scope.openViewPublishedMatrixModal = function (item) {			
+		$scope.openViewPublishedMatrixModal = function (item) {
 			$scope.selectedCategory = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				size:'lg',
+				size: 'lg',
 				templateUrl: '/modules/publishedmatrixes/client/views/publishedmatrix.client.view.html',
 				controller: 'PublishedMatrixesController',
 				resolve: {
@@ -121,7 +125,7 @@
 				}
 			});
 			modalInstance.result.then(function (selectedItem) {
-				 
+
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
