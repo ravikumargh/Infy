@@ -38,6 +38,10 @@
 					if (vm.categories[i] === item) {
 						vm.categories.splice(i, 1);
 					}
+					if(vm.categories[i]._id === item.parents[item.parents.length - 1]){
+						vm.categories[i].children.splice(vm.categories[i].children.indexOf(item._id), 1);
+						vm.categories[i].createOrUpdate();
+					}
 				}
 				Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Category deleted successfully!' });
 			});
@@ -64,9 +68,12 @@
 					}
 					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Category updated successfully!' });
 					category = null;
+					
 				} else {
 					vm.categories.unshift(res);
 					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Category saved successfully!' });
+					vm.selectedCategory.children.push(res._id);
+					vm.selectedCategory.createOrUpdate();
 				}
 			}
 
@@ -81,6 +88,24 @@
 				animation: $scope.animationsEnabled,
 				templateUrl: '/modules/categories/client/views/create-category.client.view.html',
 				controller: 'CategoriesCreateModalController',
+				resolve: {
+					ParentScope: function () {
+						return $scope;
+					}
+				}
+			});
+			modalInstance.result.then(function (selectedItem) {
+				vm.save(selectedItem);
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+		$scope.openAddSubCategoryModal = function (item) {
+			vm.selectedCategory = item;
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: '/modules/categories/client/views/create-subcategory.client.view.html',
+				controller: 'SubCategoriesCreateModalController',
 				resolve: {
 					ParentScope: function () {
 						return $scope;
@@ -179,6 +204,54 @@
 
 	}
 
+angular.module('categories')
+		.controller('SubCategoriesCreateModalController', SubCategoriesCreateModalController);
+	SubCategoriesCreateModalController.$inject = ['$scope', 'Authentication', 'CategoriesService', '$uibModalInstance', 'ParentScope'];
+	function SubCategoriesCreateModalController($scope, Authentication, CategoriesService, $uibModalInstance, ParentScope) {
+
+		$scope.category = new CategoriesService({
+			name: this.name,
+			parents: []
+		});
+		$scope.category.parents = angular.copy(ParentScope.vm.selectedCategory.parents);
+		$scope.category.parents.push(ParentScope.vm.selectedCategory._id);
+
+		$scope.headerText = 'New Sub Category';
+		// if (ParentScope.vm.selectedCategory) {
+		// 	$scope.headerText = 'Edit Sub Category';
+		// 	$scope.category = angular.copy(ParentScope.vm.selectedCategory);
+		// }
+		// $scope.isBaseVersionTemp = $scope.category.isBaseVersion;
+
+		$scope.create = function () {
+			var found = false;
+			this.error = '';
+
+			angular.forEach(ParentScope.vm.categories, function (value, key) {
+				if ($scope.category._id !== value._id && value.name.trim() === $scope.category.name.trim()) {
+					found = true;
+					return;
+				}
+			});
+			if (found) {
+				$scope.error = 'This category already exist.';
+				return;
+			}
+			$uibModalInstance.close($scope.category);
+		};
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss('cancel');
+		};
+
+		$scope.selectedCategoryChanged = function (selectedCategory) {
+			if (selectedCategory) {
+				$scope.category.name = selectedCategory.originalObject.name;
+			} else {
+				$scope.category.name = '';
+			}
+		};
+
+	}
 
 	angular.module('categories')
 		.controller('CategoriesDeleteModalController', CategoriesDeleteModalController);

@@ -21,7 +21,7 @@
 						<!--<td class="width-60px"><input type="checkbox" class="checkthis" /></td>-->
 						<td> {{category.name}} </td>
 						<td class="width-60px" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
-							<p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ng-click="openAddCategoryModal(category)"><span class="glyphicon glyphicon-plus"></span></button></p>
+							<p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ng-click="openAddSubCategoryModal(category)"><span class="glyphicon glyphicon-plus"></span></button></p>
 						</td>
 						 <td class="width-60px" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
 							<p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" ng-click="openAddCategoryModal(category)"><span class="glyphicon glyphicon-pencil"></span></button></p>
