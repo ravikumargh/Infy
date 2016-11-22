@@ -5,9 +5,9 @@
 		.module('roles')
 		.controller('RolesAdminListController', RolesAdminListController);
 
-	RolesAdminListController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication',   'RolesService', 'Notification'];
+	RolesAdminListController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'RolesService', 'Notification'];
 
-	function RolesAdminListController($scope, $state, $log, $uibModal, Authentication,   RolesService, Notification) {
+	function RolesAdminListController($scope, $state, $log, $uibModal, Authentication, RolesService, Notification) {
 		var vm = this;
 
 		// vm.role = role;
@@ -106,11 +106,11 @@
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-		$scope.openViewPublishedMatrixModal = function (item) {			
+		$scope.openViewPublishedMatrixModal = function (item) {
 			$scope.selectedRole = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				size:'lg',
+				size: 'lg',
 				templateUrl: '/modules/publishedmatrixes/client/views/publishedmatrix.client.view.html',
 				controller: 'PublishedMatrixesController',
 				resolve: {
@@ -120,7 +120,7 @@
 				}
 			});
 			modalInstance.result.then(function (selectedItem) {
-				 
+
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
