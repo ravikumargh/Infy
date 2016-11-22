@@ -18,6 +18,30 @@ exports.read = function (req, res) {
 /**
  * Update a User
  */
+exports.create = function (req, res) {
+  var user = new User(req.body);
+  // For security purposes only merge these parameters
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.username = req.body.email;
+  user.email = req.body.email;
+  user.provider = 'local';
+  user.displayName = user.firstName + ' ' + user.lastName;
+  user.roles = req.body.roles;
+
+  user.save(function (err) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+
+    res.json(user);
+  });
+};
+/**
+ * Update a User
+ */
 exports.update = function (req, res) {
   var user = req.model;
 
@@ -37,7 +61,6 @@ exports.update = function (req, res) {
     res.json(user);
   });
 };
-
 /**
  * Delete a user
  */

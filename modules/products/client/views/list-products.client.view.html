@@ -1,11 +1,28 @@
-<section  >
-	<input type="button" class="btn btn-success pull-right"  data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1" value="Add New Product" data-title="Add" ng-click="openAddProductModal()" />
+<section>
 
-	<div class="page-header">
-		<h1>Products</h1>
+	<div class="col-md-3">
+		<div class="category-sidemenu">
+			<ul class="navigation">
+				<li class="navigation-items" ng-repeat="category in vm.categories" ng-if="category.parents.length == 0">
+					<a href="#" ng-click="category.collaple =! category.collaple">{{category.name}}
+						  <span class="glyphicon  arrow" ng-class="{'glyphicon-chevron-right': !category.collaple, 'glyphicon-chevron-down': category.collaple}" ng-if="category.children.length != 0"  ></span>
+					</a>
+					<ul class="navigation" ng-show="category.collaple">
+						<li class="navigation-items" ng-repeat="subcategory in category.children"> <a href="#" class="subcategory">{{vm.getSubcategory(subcategory).name}}</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
 	</div>
+	<div class="col-md-9">
+		<input type="button" class="btn btn-success pull-right" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1"
+			value="Add New Product" data-title="Add" ng-click="openAddProductModal()" />
+		<div class="page-header">
+			<h1>Products</h1>
+		</div>
 
-	<div class="col-md-12">
 		<div class="table-responsive" data-ng-if="vm.products.length > 0">
 			<table id="mytable" class="table table-bordred table-striped">
 				<thead>
@@ -34,7 +51,7 @@
 
 			</table>
 		</div>
-		 
+
 		<div class="alert alert-warning text-center" data-ng-if="vm.products.$resolved && !vm.products.length">
 			No products created.
 		</div>

@@ -5,9 +5,9 @@
 		.module('products')
 		.controller('ProductsController', ProductsController);
 
-	ProductsController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'productResolve', 'ProductsService', 'Notification'];
+	ProductsController.$inject = ['$scope', '$state', '$log', '$uibModal', 'Authentication', 'productResolve', 'ProductsService', 'CategoriesService', 'Notification'];
 
-	function ProductsController($scope, $state, $log, $uibModal, Authentication, product, ProductsService, Notification) {
+	function ProductsController($scope, $state, $log, $uibModal, Authentication, product, ProductsService, CategoriesService, Notification) {
 		var vm = this;
 
 		vm.product = product;
@@ -23,6 +23,11 @@
 				$state.go('home');
 			}
 			vm.products = ProductsService.query();
+			vm.categories = CategoriesService.query();
+		}
+
+		vm.getSubcategory = function(cid){
+			return	_.find(vm.categories, function(o) { return o._id == cid; });
 		}
 
 		// Remove existing Article
@@ -107,11 +112,11 @@
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-		$scope.openViewPublishedMatrixModal = function (item) {			
+		$scope.openViewPublishedMatrixModal = function (item) {
 			$scope.selectedProduct = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				size:'lg',
+				size: 'lg',
 				templateUrl: '/modules/publishedmatrixes/client/views/publishedmatrix.client.view.html',
 				controller: 'PublishedMatrixesController',
 				resolve: {
@@ -121,7 +126,7 @@
 				}
 			});
 			modalInstance.result.then(function (selectedItem) {
-				 
+
 			}, function () {
 				$log.info('Modal dismissed at: ' + new Date());
 			});
@@ -190,5 +195,4 @@
 		};
 
 	}
-
 } ());

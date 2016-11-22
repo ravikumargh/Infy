@@ -5,7 +5,13 @@
         <h1>Users</h1>
       </div>
       <div class="col-md-4" style="margin-top: 2em">
-        <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()" />
+        <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()"
+        />
+      </div>
+      <div class="col-md-4" style="margin-top: 2em">
+        <a ui-sref="admin.newuser" class="btn btn-success pull-right" data-ng-if="vm.authentication.user.roles.indexOf('admin') != -1">
+      Add New User
+    </a>
       </div>
     </div>
   </div>
@@ -17,5 +23,6 @@
     </a>
   </div>
 
-  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
+  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage"
+    ng-change="vm.pageChanged()"></uib-pagination>
 </section>

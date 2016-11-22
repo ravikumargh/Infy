@@ -14,6 +14,7 @@
     vm.user = user;
     vm.remove = remove;
     vm.update = update;
+    vm.create = create;
     vm.isContextUserSelf = isContextUserSelf;
 
     function remove(user) {
@@ -32,6 +33,24 @@
       }
     }
 
+    function create(isValid) {
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'vm.userForm');
+
+        return false;
+      }
+
+      var user = vm.user;
+
+      user.$save(function () {
+        $state.go('admin.user', {
+          userId: user._id
+        });
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> User saved successfully!' });
+      }, function (errorResponse) {
+        Notification.error({ message: errorResponse.data.message, title: '<i class="glyphicon glyphicon-remove"></i> User update error!' });
+      });
+    }
     function update(isValid) {
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.userForm');
