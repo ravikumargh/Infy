@@ -1,0 +1,55 @@
+<section>
+  <div class="page-header">
+    <h1>Shop <span ng-bind="vm.shop.name"></span></h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.shopForm" ng-submit="vm.create(vm.shopForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" ng-model="vm.shop.name" placeholder="Shop Name" required />
+          <div ng-messages="vm.shopForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required"> name is required.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label" for="Address">Address</label>
+          <input vs-google-autocomplete ng-model="vm.shop.address.name" vs-place="vm.place" vs-place-id="vm.shop.address.components.placeId"
+            vs-street-number="vm.shop.address.components.streetNumber" vs-street="vm.shop.address.components.street" vs-city="vm.shop.address.components.city"
+            vs-state="vm.shop.address.components.state" vs-country-short="vm.shop.address.components.countryCode" vs-country="vm.shop.address.components.country"
+            vs-post-code="vm.shop.address.components.postCode" vs-district="vm.shop.address.components.district" vs-latitude="vm.shop.address.components.location.lat"
+            vs-longitude="vm.shop.address.components.location.long" type="text" name="vm.shop.address" id="vm.shop.address"
+            class="form-control" placeholder="Enter shop address">
+          <map zoom="15" center="{{center}}" on-click="placeMarker()"></map>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="landmark">Landmark</label>
+          <input type="text" data-ng-model="vm.shop.landmark" id="txtLangmark" class="form-control" placeholder="Enter a landmark (E.g. Opposite to bigbazar)"
+            required>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="name">Logo</label>
+          <div class="controls">
+            <input type="file" ngf-select="" ng-model="file" name="file" ngf-accept="'image/*'" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="category">Category</label>
+          <div class="controls">
+            <select id="selectCities" class="option-dropdown-menu form-control pull-left " style="width:150px" ng-model="vm.shop.category"
+              ng-change="onChangeCategory(matrixForm)" ng-options="category._id as category.name for category in vm.categories track by category._id"
+               >
+				<option value="">Select category</option>
+				</select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" value="Create" class="btn btn-success">
+          <a ui-sref="admin.shops.list" class="btn btn-primary">Cancel</a>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

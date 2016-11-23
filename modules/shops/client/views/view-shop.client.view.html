@@ -1,0 +1,42 @@
+<section>
+  <div class="page-header">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 ng-bind="vm.shop.name"></h1>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-primary" ui-sref="admin.shop-edit({shopId: vm.shop._id})">
+          <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" ng-click="vm.remove()" ng-if="!vm.isContextUserSelf()">
+          <i class="glyphicon glyphicon-trash"></i>
+        </a>
+        <a ui-sref="admin.shops.list" class="btn btn-default">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8"> 
+      <div class="row">
+        <div class="col-md-3"><strong>Name</strong></div>
+        <div class="col-md-6" ng-bind="vm.shop.name"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Address</strong></div>
+        <div class="col-md-6" ng-bind="vm.shop.address.name"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Created</strong></div>
+        <div class="col-md-6" ng-bind="vm.shop.created"></div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-3"><strong>Category</strong></div>
+        <div class="col-md-6" ng-bind="vm.shop.category"></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -31,6 +31,7 @@ module.exports = {
         'public/lib/lodash/lodash.js',       
         'public/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js',       
         'public/lib/vsGoogleAutocomplete/dist/vs-autocomplete-validator.js',       
+        'public/lib/ngmap/build/scripts/ng-map.js',       
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
