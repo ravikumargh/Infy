@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Shop = mongoose.model('Shop'),
+  Outlet = mongoose.model('Outlet'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -83,8 +84,7 @@ exports.delete = function (req, res) {
  */
 exports.list = function (req, res) {
   Shop.find().sort('-created')
-                .populate('user', 'displayName').populate('matrix', 'created')
-                .populate('publishedMatrix', 'created')
+                .populate('user', 'displayName')
                 .exec(function (err, shops) {
                   if (err) {
                     return res.status(400).send({
@@ -95,7 +95,20 @@ exports.list = function (req, res) {
                   }
                 });
 };
-
+/**
+ * List of Outlets
+ */
+exports.shopOuttletList = function (req, res) {
+  Outlet.find({"shop": req.params.shopId }).exec(function (err, outlets) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(outlets);
+      }
+    });
+};
 /**
  * Shop middleware
  */

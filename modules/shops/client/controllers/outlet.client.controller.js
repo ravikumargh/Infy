@@ -2,15 +2,15 @@
 	'use strict';
 
 	angular
-		.module('shops')
-		.controller('ShopsController', ShopsController);
+		.module('outlets')
+		.controller('OutletsController', OutletsController);
 
-	ShopsController.$inject = ['$scope', '$state', '$stateParams', '$log', '$uibModal', 'Authentication', 'ShopsService', 'CategoriesService', 'ShopOutletsService', 'Notification'];
+	OutletsController.$inject = ['$scope', '$state', '$stateParams', '$log', '$uibModal', 'Authentication', 'OutletsService', 'CategoriesService', 'Notification'];
 
-	function ShopsController($scope, $state, $stateParams, $log, $uibModal, Authentication, ShopsService, CategoriesService, ShopOutletsService, Notification) {
+	function OutletsController($scope, $state, $stateParams, $log, $uibModal, Authentication, OutletsService, CategoriesService, Notification) {
 		var vm = this;
 
-		vm.shop = new ShopsService;
+		vm.outlet = new OutletsService;
 		vm.authentication = Authentication;
 		vm.remove = remove;
 		vm.save = save;
@@ -23,58 +23,51 @@
 			if (!Authentication.user) {
 				$state.go('home');
 			}
-			if ($stateParams.shopId) {
-				vm.shop = ShopsService.get({
-					shopId: $stateParams.shopId
+			if ($stateParams.outletId) {
+				vm.outlet = OutletsService.get({
+					outletId: $stateParams.outletId
 				});
-			vm.outlets = ShopOutletsService.query({shopId:$stateParams.shopId});
 			} else {
-				vm.shops = ShopsService.query();
+				vm.outlets = OutletsService.query();
 			}
 			vm.categories = CategoriesService.query();
 		}
 
 		function create(isValid) {
 			if (!isValid) {
-				$scope.$broadcast('show-errors-check-validity', 'vm.shopForm');
+				$scope.$broadcast('show-errors-check-validity', 'vm.outletForm');
 
 				return false;
 			}
 
-			var shop = vm.shop;
+			var outlet = vm.outlet;
 			if (vm.place) {
-				shop.address.place = vm.place.name;
-				shop.address.phone = vm.place.international_phone_number;
+				outlet.address.place = vm.place.name;
+				outlet.address.phone = vm.place.international_phone_number;
 			}
 			debugger;
-			// shop.$save(function () {
-			// 	$state.go('admin.shops.list', {
-			// 		shopId: shop._id
-			// 	});
-			// 	Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> shop saved successfully!' });
-			// }, function (errorResponse) {
-			// 	Notification.error({ message: errorResponse.data.message, title: '<i class="glyphicon glyphicon-remove"></i> shop update error!' });
-			// });
 
+			outlet.shop = $stateParams.shopId;
 
-
-			shop.createOrUpdate()
+			outlet.createOrUpdate()
 				.then(successCallback)
 				.catch(errorCallback);
 
 			function successCallback(res) {
-				if (shop._id) {
-					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Shop updated successfully!' });
-					shop = null;
+				if (outlet._id) {
+					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Outlet updated successfully!' });
+					outlet = null;
 				} else {
 					vm.departments.unshift(res);
-					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Shop saved successfully!' });
+					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Outlet saved successfully!' });
 				}
-				$state.go('admin.shops.list');
+				$state.go('admin.shop', {
+					shopId: $stateParams.shopId
+				});
 			}
 
 			function errorCallback(res) {
-				Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Shop save error!' });
+				Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Outlet save error!' });
 			}
 
 		}
@@ -82,53 +75,53 @@
 		// Remove existing Article
 		function remove(item) {
 			item.$remove(function () {
-				for (var i in vm.shops) {
-					if (vm.shops[i] === item) {
-						vm.shops.splice(i, 1);
+				for (var i in vm.outlets) {
+					if (vm.outlets[i] === item) {
+						vm.outlets.splice(i, 1);
 					}
 				}
-				Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Shop deleted successfully!' });
+				Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Outlet deleted successfully!' });
 			});
 		}
 
 		function save(item) {
-			var shop = new ShopsService({
+			var outlet = new OutletsService({
 				_id: item._id,
 				name: item.name,
 				description: item.description
 			});
-			// Create a new shop, or update the current instance
+			// Create a new outlet, or update the current instance
 			item.createOrUpdate()
 				.then(successCallback)
 				.catch(errorCallback);
 
 			function successCallback(res) {
-				if (shop._id) {
-					for (var i in vm.shops) {
-						if (vm.shops[i]._id === shop._id) {
-							vm.shops[i] = shop;
+				if (outlet._id) {
+					for (var i in vm.outlets) {
+						if (vm.outlets[i]._id === outlet._id) {
+							vm.outlets[i] = outlet;
 							break;
 						}
 					}
-					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Shop updated successfully!' });
-					shop = null;
+					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Outlet updated successfully!' });
+					outlet = null;
 				} else {
-					vm.shops.unshift(res);
-					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Shop saved successfully!' });
+					vm.outlets.unshift(res);
+					Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Outlet saved successfully!' });
 				}
 			}
 
 			function errorCallback(res) {
-				Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Shop save error!' });
+				Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Outlet save error!' });
 			}
 		}
 
-		$scope.openAddShopModal = function (item) {
-			vm.selectedShop = item;
+		$scope.openAddOutletModal = function (item) {
+			vm.selectedOutlet = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: '/modules/shops/client/views/create-shop.client.view.html',
-				controller: 'ShopsCreateModalController',
+				templateUrl: '/modules/outlets/client/views/create-outlet.client.view.html',
+				controller: 'OutletsCreateModalController',
 				resolve: {
 					ParentScope: function () {
 						return $scope;
@@ -141,12 +134,12 @@
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
-		$scope.openDeleteShopModal = function (item) {
-			vm.selectedShop = item;
+		$scope.openDeleteOutletModal = function (item) {
+			vm.selectedOutlet = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
-				templateUrl: '/modules/shops/client/views/delete-shop.client.view.html',
-				controller: 'ShopsDeleteModalController',
+				templateUrl: '/modules/outlets/client/views/delete-outlet.client.view.html',
+				controller: 'OutletsDeleteModalController',
 				resolve: {
 					ParentScope: function () {
 						return $scope;
@@ -160,7 +153,7 @@
 			});
 		};
 		$scope.openViewPublishedMatrixModal = function (item) {
-			$scope.selectedShop = item;
+			$scope.selectedOutlet = item;
 			var modalInstance = $uibModal.open({
 				animation: $scope.animationsEnabled,
 				size: 'lg',
@@ -248,11 +241,11 @@
 			types: ['(address)'],
 			componentRestrictions: { country: 'IN' }
 		}
-		$scope.$watch('vm.shop.address.components.location.lat', function (searchAddress) {
+		$scope.$watch('vm.outlet.address.components.location.lat', function (searchAddress) {
 			if (searchAddress) {
-				$scope.center = [vm.shop.address.components.location.lat, vm.shop.address.components.location.long];
-				$scope.location.H = vm.shop.address.components.location.lat;
-				$scope.location.L = vm.shop.address.components.location.long;
+				$scope.center = [vm.outlet.address.components.location.lat, vm.outlet.address.components.location.long];
+				$scope.location.H = vm.outlet.address.components.location.lat;
+				$scope.location.L = vm.outlet.address.components.location.long;
 				addMarker(new google.maps.LatLng($scope.location.H, $scope.location.L))
 			}
 		});
@@ -260,61 +253,61 @@
 	}
 
 
-	angular.module('shops')
-		.controller('ShopsCreateModalController', ShopsCreateModalController);
+	angular.module('outlets')
+		.controller('OutletsCreateModalController', OutletsCreateModalController);
 
-	ShopsCreateModalController.$inject = ['$scope', 'Authentication', 'ShopsService', '$uibModalInstance', 'ParentScope'];
-	function ShopsCreateModalController($scope, Authentication, ShopsService, $uibModalInstance, ParentScope) {
+	OutletsCreateModalController.$inject = ['$scope', 'Authentication', 'OutletsService', '$uibModalInstance', 'ParentScope'];
+	function OutletsCreateModalController($scope, Authentication, OutletsService, $uibModalInstance, ParentScope) {
 
-		$scope.shop = new ShopsService({
+		$scope.outlet = new OutletsService({
 			name: this.name
 		});
-		$scope.headerText = 'New Shop';
-		if (ParentScope.vm.selectedShop) {
-			$scope.headerText = 'Edit Shop';
-			$scope.shop = angular.copy(ParentScope.vm.selectedShop);
+		$scope.headerText = 'New Outlet';
+		if (ParentScope.vm.selectedOutlet) {
+			$scope.headerText = 'Edit Outlet';
+			$scope.outlet = angular.copy(ParentScope.vm.selectedOutlet);
 		}
-		$scope.isBaseVersionTemp = $scope.shop.isBaseVersion;
+		$scope.isBaseVersionTemp = $scope.outlet.isBaseVersion;
 
 		$scope.create = function () {
 			var found = false;
 			this.error = '';
 
-			angular.forEach(ParentScope.vm.shops, function (value, key) {
-				if ($scope.shop._id !== value._id && value.name.trim() === $scope.shop.name.trim()) {
+			angular.forEach(ParentScope.vm.outlets, function (value, key) {
+				if ($scope.outlet._id !== value._id && value.name.trim() === $scope.outlet.name.trim()) {
 					found = true;
 					return;
 				}
 			});
 			if (found) {
-				$scope.error = 'This shop already exist.';
+				$scope.error = 'This outlet already exist.';
 				return;
 			}
-			$uibModalInstance.close($scope.shop);
+			$uibModalInstance.close($scope.outlet);
 		};
 		$scope.cancel = function () {
 			$uibModalInstance.dismiss('cancel');
 		};
 
-		$scope.selectedShopChanged = function (selectedShop) {
-			if (selectedShop) {
-				$scope.shop.name = selectedShop.originalObject.name;
+		$scope.selectedOutletChanged = function (selectedOutlet) {
+			if (selectedOutlet) {
+				$scope.outlet.name = selectedOutlet.originalObject.name;
 			} else {
-				$scope.shop.name = '';
+				$scope.outlet.name = '';
 			}
 		};
 
 	}
 
 
-	angular.module('shops')
-		.controller('ShopsDeleteModalController', ShopsDeleteModalController);
-	ShopsDeleteModalController.$inject = ['$scope', 'Authentication', '$uibModalInstance', 'ParentScope'];
+	angular.module('outlets')
+		.controller('OutletsDeleteModalController', OutletsDeleteModalController);
+	OutletsDeleteModalController.$inject = ['$scope', 'Authentication', '$uibModalInstance', 'ParentScope'];
 
-	function ShopsDeleteModalController($scope, Authentication, $uibModalInstance, ParentScope) {
+	function OutletsDeleteModalController($scope, Authentication, $uibModalInstance, ParentScope) {
 		var vm = this;
 		$scope.create = function () {
-			$uibModalInstance.close(ParentScope.vm.selectedShop);
+			$uibModalInstance.close(ParentScope.vm.selectedOutlet);
 		};
 		$scope.cancel = function () {
 			$uibModalInstance.dismiss('cancel');

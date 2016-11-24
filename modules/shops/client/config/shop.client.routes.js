@@ -48,10 +48,34 @@
           pageTitle: 'New Shop', roles: ['admin']
         }
       })
+      .state('admin.newoutlet', {
+        url: '/shops/:shopId/outlets/new',
+        templateUrl: '/modules/shops/client/views/outlet/new-outlet.client.view.html',
+        controller: 'OutletsController',
+        controllerAs: 'vm',
+        resolve: {
+          outletResolve: newOutlet
+        },
+        data: {
+          pageTitle: 'New Outlet', roles: ['admin']
+        }
+      })
       .state('admin.shop', {
         url: '/shops/:shopId',
         templateUrl: '/modules/shops/client/views/view-shop.client.view.html',
         controller: 'ShopsController',
+        controllerAs: 'vm',
+        resolve: {
+          shopResolve: getShop
+        },
+        data: {
+          pageTitle: 'Edit {{ shopResolve.displayName }}'
+        }
+      })
+      .state('admin.outlet', {
+        url: '/shops/:shopId/outlets/:outletId',
+        templateUrl: '/modules/shops/client/views/outlet/view-outlet.client.view.html',
+        controller: 'OutletsController',
         controllerAs: 'vm',
         resolve: {
           shopResolve: getShop
@@ -84,8 +108,12 @@
   }
 
   newShop.$inject = ['ShopsService'];
+  newOutlet.$inject = ['OutletsService'];
 
   function newShop(ShopsService) {
     return new ShopsService();
+  }
+  function newOutlet(OutletsService) {
+    return new OutletsService();
   }
 } ());

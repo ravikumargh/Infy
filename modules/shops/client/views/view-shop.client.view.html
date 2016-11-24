@@ -4,38 +4,64 @@
       <div class="col-md-6">
         <h1 ng-bind="vm.shop.name"></h1>
       </div>
-      <div class="col-md-4">
-        <a class="btn btn-primary" ui-sref="admin.shop-edit({shopId: vm.shop._id})">
-          <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn btn-primary" ng-click="vm.remove()" ng-if="!vm.isContextUserSelf()">
-          <i class="glyphicon glyphicon-trash"></i>
-        </a>
-        <a ui-sref="admin.shops.list" class="btn btn-default">Cancel</a>
+      <div class="col-md-6 pull-right">
+        <div class="pull-right">
+          <a class="btn btn-primary" ui-sref="admin.shop-edit({shopId: vm.shop._id})">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn btn-primary" ng-click="vm.remove()" ng-if="!vm.isContextUserSelf()">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+          <a ui-sref="admin.shops.list" class="btn btn-default">Cancel</a>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-8"> 
-      <div class="row">
-        <div class="col-md-3"><strong>Name</strong></div>
-        <div class="col-md-6" ng-bind="vm.shop.name"></div>
+    <div class="col-md-12">
+      <h4 class="list-group-item-heading" ng-bind="vm.shop.name"></h4>
+      <p class="list-group-item-text pull-right small" ng-bind="vm.shop.category"></p>
+      <p class="list-group-item-text" ng-bind="vm.shop.address.name"></p>
+      <p class="list-group-item-text" ng-bind="vm.shop.created"></p>
+    </div>
+  </div>
+  <div class="page-header">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>Outlets</h3>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Address</strong></div>
-        <div class="col-md-6" ng-bind="vm.shop.address.name"></div>
+      <div class="col-md-4" style="margin-top: 2em">
+        <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()"
+        />
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Created</strong></div>
-        <div class="col-md-6" ng-bind="vm.shop.created"></div>
+      <div class="col-md-4" style="margin-top: 2em">
+        <a ui-sref="admin.newoutlet({shopId: vm.shop._id})" class="btn btn-success pull-right" data-ng-if="vm.authentication.shop.roles.indexOf('admin') != -1">
+					Add New Outlet
+				</a>
       </div>
-      <hr/>
-      <div class="row">
-        <div class="col-md-3"><strong>Category</strong></div>
-        <div class="col-md-6" ng-bind="vm.shop.category"></div>
+    </div>
+    <div class="list-group">
+		<a ng-repeat="outlet in vm.outlets" ui-sref="admin.outlet({shopId: vm.shop._id,outletId: outlet._id})" class="list-group-item">
+			<h4 class="list-group-item-heading" ng-bind="outlet.name"></h4>
+			<p class="list-group-item-text pull-right small" ng-bind="outlet.category"></p>
+			<p class="list-group-item-text" ng-bind="outlet.address.name"></p>
+		</a>
+	</div>
+  </div>
+  <div class="page-header">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>Manage users</h3>
+      </div>
+      <div class="col-md-4" style="margin-top: 2em">
+        <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()"
+        />
+      </div>
+      <div class="col-md-4" style="margin-top: 2em">
+        <a ui-sref="admin.newshop" class="btn btn-success pull-right" data-ng-if="vm.authentication.shop.roles.indexOf('admin') != -1">
+					Add New user
+				</a>
       </div>
     </div>
   </div>
