@@ -91,31 +91,30 @@
         update: {
           method: 'PUT'
         },
-        getShopUsers: {
+        shopUsers: {
           method: 'GET',
-          url: '/api/users/shop/:shopId'
+          url: '/api/users/shop/:shopId', isArray: true
         },
-        getShopOutletUsers: {
+        shopOutletUsers: {
           method: 'GET',
-          url: '/api/users/outlet/:outletId'
+          url: '/api/users/outlet/:outletId', isArray: true
         }
       }
     );
 
     angular.extend(Users, {
       getShopUsers: function (shopId, shopUsers) {
-        return this.getShopUsers({
+        return this.shopUsers({
           shopId: shopId // api expects token as a parameter (i.e. /:token)
         }, shopUsers).$promise;
-      }, 
+      },
       getShopOutletUsers: function (outletId, shopOutletUsers) {
-        return this.getShopOutletUsers({
+        return this.shopOutletUsers({
           outletId: outletId // api expects token as a parameter (i.e. /:token)
-        }, shopOutletUsers).$promise;
+        }, shopOutletUsers)
       }
     });
 
     return Users;
   }
- 
 } ());

@@ -5,7 +5,7 @@
 		.module('outlets')
 		.controller('OutletsController', OutletsController);
 
-	OutletsController.$inject = ['$scope', '$state', '$filter', '$stateParams', '$log', '$uibModal', 'Authentication', 'OutletsService', 'CategoriesService', 'UsersService', 'Notification','AdminService'];
+	OutletsController.$inject = ['$scope', '$state', '$filter', '$stateParams', '$log', '$uibModal', 'Authentication', 'OutletsService', 'CategoriesService', 'UsersService', 'Notification', 'AdminService'];
 
 	function OutletsController($scope, $state, $filter, $stateParams, $log, $uibModal, Authentication, OutletsService, CategoriesService, user, Notification, AdminService) {
 		var vm = this;
@@ -211,7 +211,10 @@
 		vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
 		vm.pageChanged = pageChanged;
 
-AdminService.getShopOutletUsers($stateParams.outletId);
+		AdminService.getShopOutletUsers($stateParams.outletId,function (data) {
+			vm.users = data;
+			vm.buildPager();
+		});
 
 		// AdminService.getShopOutletUsers({outletId:$stateParams.outletId},function (data) {
 		// 	vm.users = data;

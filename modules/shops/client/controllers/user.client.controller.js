@@ -149,7 +149,7 @@
 			this.error = '';
 
 			angular.forEach(ParentScope.vm.users, function (value, key) {
-				if ($scope.user._id !== value._id && value.name.trim() === $scope.user.name.trim()) {
+				if ($scope.user._id !== value._id && value.email.trim() === $scope.user.email.trim()) {
 					found = true;
 					return;
 				}
