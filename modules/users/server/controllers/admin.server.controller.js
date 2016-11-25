@@ -92,7 +92,18 @@ exports.list = function (req, res) {
     res.json(users);
   });
 };
-
+/**
+ * List of shopUsers
+ */
+exports.shopUsers = function (req, res) {
+  res.json(req.model);
+};
+/**
+ * List of outletUsers
+ */
+exports.outletUsers = function (req, res) {
+  res.json(req.model);
+};
 /**
  * User middleware
  */
@@ -104,6 +115,48 @@ exports.userByID = function (req, res, next, id) {
   }
 
   User.findById(id, '-salt -password -providerData').exec(function (err, user) {
+    if (err) {
+      return next(err);
+    } else if (!user) {
+      return next(new Error('Failed to load user ' + id));
+    }
+
+    req.model = user;
+    next();
+  });
+};
+/**
+ * User middleware
+ */
+exports.userByShopID = function (req, res, next, id) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: 'Shop id is invalid'
+    });
+  }
+
+  User.find({ "shop": id }).exec(function (err, user) {
+    if (err) {
+      return next(err);
+    } else if (!user) {
+      return next(new Error('Failed to load user ' + id));
+    }
+
+    req.model = user;
+    next();
+  });
+};
+/**
+ * User middleware
+ */
+exports.userByOutletID = function (req, res, next, id) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: 'Outlet is invalid'
+    });
+  }
+
+  User.find({ "outlet": id }).exec(function (err, user) {
     if (err) {
       return next(err);
     } else if (!user) {

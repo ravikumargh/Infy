@@ -21,6 +21,14 @@ module.exports = function (app) {
     .put(adminPolicy.isAllowed, admin.update)
     .delete(adminPolicy.isAllowed, admin.delete);
 
+  app.route('/api/users/shop/:shopId').get(admin.shopUsers);
+  app.route('/api/users/outlet/:outletId').get(admin.outletUsers);
+ app.route('/api/users/:shopId').get(admin.shopUsers)
+ app.route('/api/users/:outletId').get(admin.outletUsers)
+
+  app.param('shopId', admin.userByShopID);
+  app.param('outletId', admin.userByOutletID);
+
   // Finish by binding the user middleware
   app.param('userId', admin.userByID);
 };

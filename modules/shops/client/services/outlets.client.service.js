@@ -74,3 +74,22 @@ angular
     }
   }
 }());
+// (function () {
+//   'use strict';
+//   // TODO this should be Users service
+//   angular
+//     .module('shop.users.services')
+//     .factory('ShopUserService', ShopUserService);
+
+//   ShopUserService.$inject = ['$resource'];
+
+//   function ShopUserService($resource) {
+//     return $resource('/api/users/:userId', {
+//       userId: '@_id'
+//     }, {
+//       update: {
+//         method: 'PUT'
+//       }
+//     });
+//   }
+// }());

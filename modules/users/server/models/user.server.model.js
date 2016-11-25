@@ -39,11 +39,11 @@ var validateLocalStrategyEmail = function (email) {
  * - not begin or end with "."
  */
 
-var validateUsername = function(username) {
+var validateUsername = function (username) {
   var usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
   return (
     this.provider !== 'local' ||
-    (username  && config.illegalUsernames.indexOf(username) < 0)
+    (username && config.illegalUsernames.indexOf(username) < 0)
   );
   // && usernameRegex.test(username)
 };
@@ -93,6 +93,12 @@ var UserSchema = new Schema({
   },
   salt: {
     type: String
+  }, 
+  shop: {
+    type: String
+  }, 
+  outlet: {
+    type: String
   },
   profileImageURL: {
     type: String,
@@ -107,7 +113,7 @@ var UserSchema = new Schema({
   roles: {
     type: [{
       type: String,
-      enum: ['user', 'admin']
+      enum: ['user', 'admin', 'superadmin', 'outletadmin', 'shopadmin']
     }],
     default: ['user'],
     required: 'Please provide at least one role'

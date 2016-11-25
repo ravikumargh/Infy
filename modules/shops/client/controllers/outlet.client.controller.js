@@ -5,15 +5,16 @@
 		.module('outlets')
 		.controller('OutletsController', OutletsController);
 
-	OutletsController.$inject = ['$scope', '$state', '$stateParams', '$log', '$uibModal', 'Authentication', 'OutletsService', 'CategoriesService', 'Notification'];
+	OutletsController.$inject = ['$scope', '$state', '$filter', '$stateParams', '$log', '$uibModal', 'Authentication', 'OutletsService', 'CategoriesService', 'UsersService', 'Notification','AdminService'];
 
-	function OutletsController($scope, $state, $stateParams, $log, $uibModal, Authentication, OutletsService, CategoriesService, Notification) {
+	function OutletsController($scope, $state, $filter, $stateParams, $log, $uibModal, Authentication, OutletsService, CategoriesService, user, Notification, AdminService) {
 		var vm = this;
 
 		vm.outlet = new OutletsService;
 		vm.authentication = Authentication;
 		vm.remove = remove;
 		vm.save = save;
+		vm.user = user;
 		// vm.update = update;
 		vm.create = create;
 		init();
@@ -72,6 +73,21 @@
 
 		}
 
+		function createUser(user) {
+			user.shop = $stateParams.shopId;
+			user.outlet = $stateParams.outletId;
+			user.password = "Password@123";
+			user.roles = ['outletadmin'];
+
+			user.$save(function () {
+				$state.go('admin.user', {
+					userId: user._id
+				});
+				Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> User saved successfully!' });
+			}, function (errorResponse) {
+				Notification.error({ message: errorResponse.data.message, title: '<i class="glyphicon glyphicon-remove"></i> User update error!' });
+			});
+		}
 		// Remove existing Article
 		function remove(item) {
 			item.$remove(function () {
@@ -115,6 +131,25 @@
 				Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Outlet save error!' });
 			}
 		}
+
+		$scope.openAddUserModal = function (item) {
+			vm.selectedUser = item;
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: '/modules/shops/client/views/user/create-user.client.view.html',
+				controller: 'UsersCreateModalController',
+				resolve: {
+					ParentScope: function () {
+						return $scope;
+					}
+				}
+			});
+			modalInstance.result.then(function (selectedItem) {
+				createUser(selectedItem);
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
 
 		$scope.openAddOutletModal = function (item) {
 			vm.selectedOutlet = item;
@@ -171,7 +206,39 @@
 				$log.info('Modal dismissed at: ' + new Date());
 			});
 		};
+		/** Users **********************************************************/
+		vm.buildPager = buildPager;
+		vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
+		vm.pageChanged = pageChanged;
 
+AdminService.getShopOutletUsers($stateParams.outletId);
+
+		// AdminService.getShopOutletUsers({outletId:$stateParams.outletId},function (data) {
+		// 	vm.users = data;
+		// 	vm.buildPager();
+		// });
+
+		function buildPager() {
+			vm.pagedItems = [];
+			vm.itemsPerPage = 15;
+			vm.currentPage = 1;
+			vm.figureOutItemsToDisplay();
+		}
+
+		function figureOutItemsToDisplay() {
+			vm.filteredItems = $filter('filter')(vm.users, {
+				$: vm.search
+			});
+			vm.filterLength = vm.filteredItems.length;
+			var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
+			var end = begin + vm.itemsPerPage;
+			vm.pagedItems = vm.filteredItems.slice(begin, end);
+		}
+
+		function pageChanged() {
+			vm.figureOutItemsToDisplay();
+		}
+		/** **********************************************************/
 		/*Map starts***********************************************************/
 		var map;
 

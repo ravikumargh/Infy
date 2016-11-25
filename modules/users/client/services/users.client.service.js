@@ -70,20 +70,52 @@
     return Users;
   }
 
+
+
+
+
+
+
   // TODO this should be Users service
   angular
     .module('users.admin.services')
     .factory('AdminService', AdminService);
-
   AdminService.$inject = ['$resource'];
 
   function AdminService($resource) {
-    return $resource('/api/users/:userId', {
-      userId: '@_id'
+    var Users = $resource('/api/users/:userId', {
+      userId: '@_id',
+      shopId: '@shop',
+      outletId: '@outlet'
     }, {
-      update: {
-        method: 'PUT'
+        update: {
+          method: 'PUT'
+        },
+        getShopUsers: {
+          method: 'GET',
+          url: '/api/users/shop/:shopId'
+        },
+        getShopOutletUsers: {
+          method: 'GET',
+          url: '/api/users/outlet/:outletId'
+        }
+      }
+    );
+
+    angular.extend(Users, {
+      getShopUsers: function (shopId, shopUsers) {
+        return this.getShopUsers({
+          shopId: shopId // api expects token as a parameter (i.e. /:token)
+        }, shopUsers).$promise;
+      }, 
+      getShopOutletUsers: function (outletId, shopOutletUsers) {
+        return this.getShopOutletUsers({
+          outletId: outletId // api expects token as a parameter (i.e. /:token)
+        }, shopOutletUsers).$promise;
       }
     });
+
+    return Users;
   }
-}());
+ 
+} ());
